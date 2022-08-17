@@ -20,8 +20,8 @@ import java.util.Locale;
 
 public class MainActivity extends Activity {
     private int pauseDelay ; // pause between loops
-    private int loopTimer;// seconds counter for loop1 or loop2
-    private int relaxationTimer = 0;// seconds counter for relaxation
+    private int loopTimer;// seconds counter for loop timer in t1View
+    private int relaxationTimer = 0;// seconds counter for t2View relaxation timer
     private int loop1; // loop1 time = 45"
     private int loop2; // loop2 time = 60"
     private int loop0 = loop1; // loop0 =loop time in seconds ie loop1 or loop2 ie 45" or 60"
@@ -54,7 +54,7 @@ public class MainActivity extends Activity {
         setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
         getWindow().addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
         loadData();// loads previous setup values between sessions
-        // find IDs
+        // associate java variables with buttons/views from xml files
         setupButton = (Button) findViewById(R.id.setupButton);
         editPause = (EditText) findViewById(R.id.editPause);
         labelPause = (TextView) findViewById(R.id.labelPause);
@@ -67,13 +67,14 @@ public class MainActivity extends Activity {
         startT2Button = (Button) findViewById(R.id.startT2Button);
         t1View = (TextView)findViewById(R.id.t1TextView);
         t2View = (TextView)findViewById(R.id.t2TextView);
-        // hide Pause label and editText
+        // hide setup menu
         editPause.setVisibility(View.INVISIBLE);
         labelPause.setVisibility(View.INVISIBLE);
         editLoop1.setVisibility(View.INVISIBLE);
         labelLoop1.setVisibility(View.INVISIBLE);
         editLoop2.setVisibility(View.INVISIBLE);
         labelLoop2.setVisibility(View.INVISIBLE);
+        // label buttons
         loop1Button.setText("loop " + Integer.toString(loop1) );//set the text on button
         loop2Button.setText("loop " + Integer.toString(loop2) );//set the text on button
         setupButton.setText("setup " );//set the text on button
@@ -115,13 +116,11 @@ public class MainActivity extends Activity {
     public void loadData() {
          // save set up values between sessions
         SharedPreferences sharedPref = getSharedPreferences(MyPREFERENCES, Context.MODE_PRIVATE);
-
         SharedPreferences.Editor editor = sharedPref.edit();
         loop1=sharedPref.getInt("loop1", 45);// default to 45
         loop2=sharedPref.getInt("loop2", 60);// default to 60
         pauseDelay=sharedPref.getInt("pauseDelay", 7);// default to 7
         loopTimer = -pauseDelay;
-
     }
 
     public void onClickSetup(View view)
@@ -200,7 +199,6 @@ public class MainActivity extends Activity {
 
      private void running_loopTimer()
     {
-
 		final Handler handle1 = new Handler(Looper.getMainLooper());
 		handle1.post(new Runnable() {
 			@Override
