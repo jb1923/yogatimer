@@ -1,0 +1,174 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+   xmlns:android="http://schemas.android.com/apk/res/android"
+   xmlns:tools="http://schemas.android.com/tools"
+   android:layout_width="match_parent"
+   android:layout_height="match_parent"
+   android:orientation="vertical"
+   android:background="#FF000000"
+   android:padding="2dp"
+   tools:context="com.example.yogatimer.MainActivity">
+
+   <Button
+       android:id="@+id/setupButton"
+       android:layout_width="wrap_content"
+       android:layout_height="wrap_content"
+       android:layout_alignParentLeft="true"
+       android:layout_alignParentTop="true"
+       android:layout_marginLeft="10dp"
+       android:layout_marginTop="10dp"
+       android:onClick="onClickSetup"
+       android:background="@android:color/black"
+       android:textColor="@android:color/white"
+       android:text="setup"
+       android:textSize="20sp" />
+
+   <TextView
+       android:id="@+id/labelPause"
+       android:layout_width="wrap_content"
+       android:layout_height="wrap_content"
+       android:layout_alignParentTop="true"
+       android:layout_alignParentLeft="true"
+       android:layout_marginTop="80dp"
+       android:text="loop pause:-  "
+       android:textColor="#FFF"
+       android:textSize="25dp" />
+   <EditText
+       android:id="@+id/editPause"
+       android:layout_width="wrap_content"
+       android:layout_height="wrap_content"
+       android:layout_alignParentTop="true"
+       android:layout_marginTop="70dp"
+       android:layout_toRightOf="@+id/labelPause"
+       android:clickable="true"
+       android:inputType="number"
+       android:textSize="25sp"
+       android:textColor="#fff"
+       android:maxLines="1" />
+
+   <TextView
+       android:id="@+id/labelLoop1"
+       android:layout_width="wrap_content"
+       android:layout_height="wrap_content"
+       android:layout_below="@+id/labelPause"
+       android:layout_alignParentLeft="true"
+       android:layout_marginTop="10dp"
+       android:text="loop 1:-  "
+       android:textColor="#FFF"
+       android:textSize="25dp" />
+   <EditText
+       android:id="@+id/editLoop1"
+       android:layout_width="wrap_content"
+       android:layout_height="wrap_content"
+       android:layout_below="@+id/labelPause"
+       android:layout_toRightOf="@+id/labelLoop1"
+       android:clickable="true"
+       android:inputType="number"
+       android:text="45"
+       android:textSize="25sp"
+       android:textColor="#fff"
+       android:maxLines="1" />
+
+   <TextView
+       android:id="@+id/labelLoop2"
+       android:layout_width="wrap_content"
+       android:layout_height="wrap_content"
+       android:layout_below="@+id/labelLoop1"
+       android:layout_alignParentLeft="true"
+       android:layout_marginTop="10dp"
+       android:text="loop 2:-  "
+       android:textColor="#FFF"
+       android:textSize="25dp" />
+   <EditText
+       android:id="@+id/editLoop2"
+       android:layout_width="wrap_content"
+       android:layout_height="wrap_content"
+       android:layout_below="@+id/labelLoop1"
+       android:layout_toRightOf="@+id/labelLoop2"
+       android:clickable="true"
+       android:inputType="number"
+       android:text="60"
+       android:textSize="25sp"
+       android:textColor="#fff"
+       android:maxLines="1" />
+
+   <TextView
+       android:id="@+id/t1TextView"
+       android:layout_width="wrap_content"
+       android:layout_height="wrap_content"
+       android:layout_alignParentTop="true"
+       android:layout_centerHorizontal="true"
+       android:layout_marginTop="150dp"
+       android:textAppearance="@android:style/TextAppearance.Large"
+       android:textColor="#FFF"
+       android:textSize="200dp" />
+
+   <Button
+       android:id="@+id/loop1Button"
+       android:layout_width="wrap_content"
+       android:layout_height="wrap_content"
+       android:layout_below="@+id/t1TextView"
+       android:layout_alignParentLeft="true"
+       android:layout_marginLeft="10dp"
+       android:layout_marginTop="5dp"
+       android:onClick="onClickLoop1"
+       android:textSize="20sp" />
+
+   <Button
+       android:id="@+id/loop2Button"
+       android:layout_width="wrap_content"
+       android:layout_height="wrap_content"
+       android:layout_below="@+id/t1TextView"
+       android:layout_alignParentRight="true"
+       android:layout_marginTop="5dp"
+       android:layout_marginRight="10dp"
+       android:onClick="onClickLoop2"
+       android:textSize="20sp" />
+
+   <Button
+       android:id="@+id/stopButton"
+       android:layout_width="wrap_content"
+       android:layout_height="wrap_content"
+       android:layout_above="@+id/startT2Button"
+       android:layout_centerHorizontal="true"
+       android:layout_marginBottom="20dp"
+       android:onClick="onClickStop"
+       android:text="stop"
+       android:textSize="25sp" />
+
+   <Button
+   android:id="@+id/startT2Button"
+   android:layout_width="wrap_content"
+   android:layout_height="wrap_content"
+   android:layout_alignParentLeft="true"
+   android:layout_marginLeft="10dp"
+   android:layout_alignParentBottom="true"
+   android:layout_marginBottom="10dp"
+   android:textSize="20sp"
+   android:onClick="onClickStartT2"
+   android:text="start" />
+
+   <TextView
+       android:id="@+id/t2TextView"
+       android:layout_width="wrap_content"
+       android:layout_height="wrap_content"
+       android:layout_centerHorizontal="true"
+       android:layout_alignParentBottom="true"
+       android:layout_marginBottom="10dp"
+       android:textAppearance="@android:style/TextAppearance.Large"
+       android:textColor="#FFF"
+       android:textSize="40dp" />
+
+   <Button
+       android:id="@+id/clearButton"
+       android:layout_width="wrap_content"
+       android:layout_height="wrap_content"
+       android:layout_alignParentRight="true"
+       android:layout_alignParentBottom="true"
+       android:layout_marginRight="10dp"
+       android:layout_marginBottom="10dp"
+       android:textSize="20sp"
+       android:onClick="onClickClear"
+       android:text="clear" />
+
+</RelativeLayout>
