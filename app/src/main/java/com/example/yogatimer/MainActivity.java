@@ -241,22 +241,15 @@ public class MainActivity extends Activity {
                 time_t2 = String .format("%02d:%02d:%02d", hrs,mins, Math.abs(secs));
 				t2View.setText(time_t2);
                 if  (runningT2) 
-                { // beep at 10, 20 mins only if t1 is stopped
+                {
                     if ( relaxationTimer < 0 ) {
                         t2View.setTextColor(pauseColor);}
                     else {  t2View.setTextColor(colWhite);}
 
-					if  (runningT1 == false) {
-                        if  (relaxationTimer == 0)  {
-                            toneGen1.startTone(ToneGenerator.TONE_CDMA_PIP,100);
-                        }
-                        if ( (relaxationTimer > 599) && (relaxationTimer < 601) ) {
-                            toneGen1.startTone(ToneGenerator.TONE_CDMA_PIP,1000);
-                        }
-						if ( (relaxationTimer > 1199) && (relaxationTimer < 1201) ) {
-							toneGen1.startTone(ToneGenerator.TONE_CDMA_PIP,1000);
-						}
-					}
+					if  (runningT1 == false) { //  if t1 is stopped
+                        if  ((relaxationTimer % 600) ==0 )// beep at 0, 10, 20, 30 mins
+                        { toneGen1.startTone(ToneGenerator.TONE_CDMA_PIP,150);}
+  					}
 					relaxationTimer++; // update loopTimer as T2 running
                 } // end of if (runningT2)
                 handle1.postDelayed(this, 1000); // 1" time delay
