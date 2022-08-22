@@ -126,16 +126,17 @@ public class MainActivity extends Activity {
     public void onClickSetup(View view)
     {
          if( editLoop1.getVisibility()==View.VISIBLE)
-        {  //  save button has been clicked:- so update loop1,loop2,pauseDelay, change button label to SETUP
-            // convert to integer - get String - remove spaces
-            pauseDelay = Integer.parseInt(editPause.getText().toString()
-                                    .replace(" ", ""));// spaces removed
-            pauseDelay = Math.abs(pauseDelay);
+        {   // save button has been clicked:- update loop1,loop2,pauseDelay, change button label to SETUP
+            // convert to integer - get String - remove all but digits
+            String pauseDelayStr = editPause.getText().toString().replaceAll("[^0-9]+",  "");
+            if (pauseDelayStr.equals("")) pauseDelayStr ="7";
+            pauseDelay = Integer.parseInt(pauseDelayStr);// only numbers
+            //pauseDelay = Math.abs(pauseDelay);// only positive number
             loopTimer = -pauseDelay;
             loop1 = Integer.parseInt(editLoop1.getText().toString()
-                                            .replace(" ", ""));// spaces removed
+                    .replaceAll("[^0-9]+",  ""));// only numbers
             loop2 = Integer.parseInt(editLoop2.getText().toString()
-                    .replace(" ", ""));// spaces removed);
+                    .replaceAll("[^0-9]+",  ""));// only numbers
             saveData();
            // Close keyboard
             ((InputMethodManager)getSystemService(Context.INPUT_METHOD_SERVICE)).hideSoftInputFromWindow(editPause.getWindowToken(), 0);
@@ -153,20 +154,18 @@ public class MainActivity extends Activity {
         }else
         { // setup button has been clicked:- change button label to SAVE, open edit texts
             setupButton.setText("Save  " );//set the text on button
-            editLoop1.setText("   "+Integer.toString(loop1));// add spaces for easy selectin
-            editLoop2.setText("   "+Integer.toString(loop2));// add spaces for easy selectin
-            editPause.setText("   "+Integer.toString(pauseDelay));// add spaces for easy selectin
+            editLoop1.setText(" "+Integer.toString(loop1)+" ");// add spaces for easy selectin
+            editLoop2.setText(" "+Integer.toString(loop2)+" ");// add spaces for easy selectin
+            editPause.setText(" "+Integer.toString(pauseDelay)+" ");// add spaces for easy selectin
             labelPause.setVisibility(View.VISIBLE);
             editPause.setVisibility(View.VISIBLE);
             editLoop1.setVisibility(View.VISIBLE);
             labelLoop1.setVisibility(View.VISIBLE);
             editLoop2.setVisibility(View.VISIBLE);
-            editLoop2.setSelection(0);
             labelLoop2.setVisibility(View.VISIBLE);
             // Open keyboard
             ((InputMethodManager)getSystemService(Context.INPUT_METHOD_SERVICE)).showSoftInput(editPause, InputMethodManager.SHOW_FORCED);
             editPause.setSelection(editPause.getText().length());
-            //            editPause.requestFocus();
         }
     }
 
