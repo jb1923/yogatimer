@@ -9,6 +9,7 @@ import android.media.ToneGenerator;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Looper;
+import android.util.AttributeSet;
 import android.view.View;
 import android.view.WindowManager;
 import android.view.inputmethod.InputMethodManager;
@@ -16,7 +17,29 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 
+import androidx.appcompat.widget.AppCompatEditText;
+
 import java.util.Locale;
+
+class CustomEditText extends EditText {
+    public CustomEditText(Context context) {
+        super(context);
+    }
+
+    public CustomEditText(Context context, AttributeSet attrs) {
+        super(context, attrs);
+    }
+
+    public CustomEditText(Context context, AttributeSet attrs, int defStyleAttr) {
+        super(context, attrs, defStyleAttr);
+    }
+    public int GetInt( int default1) {
+        // gets integer from editText - if no valid int returns default1
+        String edTxtStr = getText().toString().replaceAll("[^0-9]+",  "");
+        if (edTxtStr.equals(""))  return default1;
+        else  return  Integer.valueOf(edTxtStr );// only numbers
+    }
+}
 
 public class MainActivity extends Activity {
     private int pauseDelay ; // pause between loops
@@ -27,11 +50,11 @@ public class MainActivity extends Activity {
     private int loop0 = loop1; // loop0 =loop time in seconds ie loop1 or loop2 ie 45" or 60"
     private boolean runningT1;
     private boolean runningT2;
-    private EditText editPause ;
+    private CustomEditText editPause ;
     private TextView labelPause;
-    private EditText editLoop1 ;
+    private CustomEditText editLoop1 ;
     private TextView labelLoop1;
-    private EditText editLoop2 ;
+    private CustomEditText editLoop2 ;
     private TextView labelLoop2;
     private TextView t1View ;
     private TextView t2View ;
@@ -46,6 +69,7 @@ public class MainActivity extends Activity {
     int pauseColor=0xFFFF0000;
     ToneGenerator toneGen1 = new ToneGenerator(AudioManager.STREAM_SYSTEM, 100);
     public static final String MyPREFERENCES = "MyPrefs" ;
+
     @Override
     protected void onCreate(Bundle savedInstanceState)
     {
@@ -56,11 +80,11 @@ public class MainActivity extends Activity {
         loadData();// loads previous setup values between sessions
         // associate java variables with buttons/views from xml files
         setupButton = (Button) findViewById(R.id.setupButton);
-        editPause = (EditText) findViewById(R.id.editPause);
+        editPause = (CustomEditText) findViewById(R.id.editPause);
         labelPause = (TextView) findViewById(R.id.labelPause);
-        editLoop1 = (EditText) findViewById(R.id.editLoop1);
+        editLoop1 = (CustomEditText) findViewById(R.id.editLoop1);
         labelLoop1 = (TextView) findViewById(R.id.labelLoop1);
-        editLoop2 = (EditText) findViewById(R.id.editLoop2);
+        editLoop2 = (CustomEditText) findViewById(R.id.editLoop2);
         labelLoop2 = (TextView) findViewById(R.id.labelLoop2);
         loop1Button = (Button) findViewById(R.id.loop1Button);
         loop2Button = (Button) findViewById(R.id.loop2Button);
@@ -123,21 +147,15 @@ public class MainActivity extends Activity {
         loopTimer = -pauseDelay;
     }
 
-    public int editTextGetInt(EditText edTxt, int default1) {
-        // gets integer from editText - if no valid int returns default1
-        String edTxtStr = edTxt.getText().toString().replaceAll("[^0-9]+",  "");
-        if (edTxtStr.equals(""))  return default1;
-        else  return  Integer.parseInt(edTxtStr );// only numbers
-    }
-
     public void onClickSetup(View view)
     {
          if( editLoop1.getVisibility()==View.VISIBLE)
         {   // save button has been clicked:- update loop1,loop2,pauseDelay, change button label to SETUP
-            pauseDelay = editTextGetInt(editPause ,7);// positive number
+//            pauseDelay = editTextGetInt(editPause ,7);// positive number
+            pauseDelay = editPause.GetInt(7);// positive number
             loopTimer = -pauseDelay;// need -ive number for countdown
-            loop1 = editTextGetInt(editLoop1 ,45);
-            loop2 = editTextGetInt(editLoop2 ,60);
+            loop1 = editLoop1.GetInt(45);
+            loop2 = editLoop2.GetInt(60);
             saveData();
            // Close keyboard
             ((InputMethodManager)getSystemService(Context.INPUT_METHOD_SERVICE)).hideSoftInputFromWindow(editPause.getWindowToken(), 0);
