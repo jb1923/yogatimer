@@ -103,7 +103,7 @@ public class MainActivity extends Activity {
         loop2Button.setBackgroundColor(buttonOffColor);
     }
 
-    public void saveData() {
+     public void saveData() {
         // save set up values for next sessions
         SharedPreferences sharedPref = getSharedPreferences(MyPREFERENCES, Context.MODE_PRIVATE);
         SharedPreferences.Editor editor = sharedPref.edit();;
@@ -123,20 +123,21 @@ public class MainActivity extends Activity {
         loopTimer = -pauseDelay;
     }
 
+    public int editTextGetInt(EditText edTxt, int default1) {
+        // gets integer from editText - if no valid int returns default1
+        String edTxtStr = edTxt.getText().toString().replaceAll("[^0-9]+",  "");
+        if (edTxtStr.equals(""))  return default1;
+        else  return  Integer.parseInt(edTxtStr );// only numbers
+    }
+
     public void onClickSetup(View view)
     {
          if( editLoop1.getVisibility()==View.VISIBLE)
         {   // save button has been clicked:- update loop1,loop2,pauseDelay, change button label to SETUP
-            // convert to integer - get String - remove all but digits
-            String pauseDelayStr = editPause.getText().toString().replaceAll("[^0-9]+",  "");
-            if (pauseDelayStr.equals("")) pauseDelayStr ="7";
-            pauseDelay = Integer.parseInt(pauseDelayStr);// only numbers
-            //pauseDelay = Math.abs(pauseDelay);// only positive number
-            loopTimer = -pauseDelay;
-            loop1 = Integer.parseInt(editLoop1.getText().toString()
-                    .replaceAll("[^0-9]+",  ""));// only numbers
-            loop2 = Integer.parseInt(editLoop2.getText().toString()
-                    .replaceAll("[^0-9]+",  ""));// only numbers
+            pauseDelay = editTextGetInt(editPause ,7);// positive number
+            loopTimer = -pauseDelay;// need -ive number for countdown
+            loop1 = editTextGetInt(editLoop1 ,45);
+            loop2 = editTextGetInt(editLoop2 ,60);
             saveData();
            // Close keyboard
             ((InputMethodManager)getSystemService(Context.INPUT_METHOD_SERVICE)).hideSoftInputFromWindow(editPause.getWindowToken(), 0);
