@@ -34,11 +34,16 @@ class CustomEditText extends EditText {
         super(context, attrs, defStyleAttr);
     }
     public int GetInt( int default1) {
-        // gets integer from editText - if no valid int returns default1
+        // gets integer from CustomEditText - if no valid int, returns default1
         String edTxtStr = getText().toString().replaceAll("[^0-9]+",  "");
         if (edTxtStr.equals(""))  return default1;
         else  return  Integer.valueOf(edTxtStr );// only numbers
     }
+    public void SetInt( int value ) {
+        //displays  integer value in CustomEditText
+        setText(" "+Integer.toString(value)+" ");// add spaces for easy selectin
+    }
+
 }
 
 public class MainActivity extends Activity {
@@ -128,12 +133,12 @@ public class MainActivity extends Activity {
     }
 
      public void saveData() {
-        // save set up values for next sessions
+        // save set up values for next session
         SharedPreferences sharedPref = getSharedPreferences(MyPREFERENCES, Context.MODE_PRIVATE);
         SharedPreferences.Editor editor = sharedPref.edit();;
-        editor.putInt("loop1", loop1);
-        editor.putInt("loop2", loop2);
-        editor.putInt("pauseDelay", pauseDelay);
+        editor.putInt("loop1", loop1); // save loop1 for next session
+        editor.putInt("loop2", loop2); // save loop2 for next session
+        editor.putInt("pauseDelay", pauseDelay); // save pauseDelay for next session
         editor.commit();
         editor.apply();
     }
@@ -141,9 +146,9 @@ public class MainActivity extends Activity {
          // save set up values between sessions
         SharedPreferences sharedPref = getSharedPreferences(MyPREFERENCES, Context.MODE_PRIVATE);
         SharedPreferences.Editor editor = sharedPref.edit();
-        loop1=sharedPref.getInt("loop1", 45);// default to 45
-        loop2=sharedPref.getInt("loop2", 60);// default to 60
-        pauseDelay=sharedPref.getInt("pauseDelay", 7);// default to 7
+        loop1=sharedPref.getInt("loop1", 45);// get loop1 from previous session
+        loop2=sharedPref.getInt("loop2", 60);// get loop2 from previous session
+        pauseDelay=sharedPref.getInt("pauseDelay", 7);//get pauseDelay from previous session
         loopTimer = -pauseDelay;
     }
 
@@ -151,11 +156,10 @@ public class MainActivity extends Activity {
     {
          if( editLoop1.getVisibility()==View.VISIBLE)
         {   // save button has been clicked:- update loop1,loop2,pauseDelay, change button label to SETUP
-//            pauseDelay = editTextGetInt(editPause ,7);// positive number
-            pauseDelay = editPause.GetInt(7);// positive number
+            pauseDelay = editPause.GetInt(7);// CustomEditText.GetInt
             loopTimer = -pauseDelay;// need -ive number for countdown
-            loop1 = editLoop1.GetInt(45);
-            loop2 = editLoop2.GetInt(60);
+            loop1 = editLoop1.GetInt(45);// CustomEditText.GetInt
+            loop2 = editLoop2.GetInt(60);// CustomEditText.GetInt
             saveData();
            // Close keyboard
             ((InputMethodManager)getSystemService(Context.INPUT_METHOD_SERVICE)).hideSoftInputFromWindow(editPause.getWindowToken(), 0);
@@ -173,9 +177,9 @@ public class MainActivity extends Activity {
         }else
         { // setup button has been clicked:- change button label to SAVE, open edit texts
             setupButton.setText("Save  " );//set the text on button
-            editLoop1.setText(" "+Integer.toString(loop1)+" ");// add spaces for easy selectin
-            editLoop2.setText(" "+Integer.toString(loop2)+" ");// add spaces for easy selectin
-            editPause.setText(" "+Integer.toString(pauseDelay)+" ");// add spaces for easy selectin
+            editLoop1.SetInt(loop1);// CustomEditText.SetInt
+            editLoop2.SetInt(loop2);// CustomEditText.SetInt
+            editPause.SetInt(pauseDelay);// CustomEditText.SetInt
             labelPause.setVisibility(View.VISIBLE);
             editPause.setVisibility(View.VISIBLE);
             editLoop1.setVisibility(View.VISIBLE);
