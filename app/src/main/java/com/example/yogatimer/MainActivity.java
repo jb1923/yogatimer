@@ -157,7 +157,7 @@ public class MainActivity extends Activity {
             loopTimer = -pauseDelay;// need -ive number for countdown
             loop1 = editLoop1.GetInt(45);// CustomEditText.GetInt
             loop2 = editLoop2.GetInt(60);// CustomEditText.GetInt
-            loop0 = loop1;
+       //     loop0 = loop1;
             saveData();
             // Close keyboard
             ((InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE)).hideSoftInputFromWindow(editPause.getWindowToken(), 0);
@@ -245,16 +245,9 @@ public class MainActivity extends Activity {
                 t1View.setText(time_t1);
                 if (runningT1)
                 {
-                if (loopTimer < 0)
-                    {
-                            t1View.setTextColor(pauseColor);
-                    } else {
-                        t1View.setTextColor(colWhite);
-                    }
-                    if (loopTimer == 0) {
-                        toneGen1.startTone(ToneGenerator.TONE_CDMA_PIP, 150);
-
-                    }
+                    if (loopTimer < 0)  t1View.setTextColor(pauseColor);
+                    else t1View.setTextColor(colWhite);
+                    if (loopTimer == 0) toneGen1.startTone(ToneGenerator.TONE_CDMA_PIP, 150);
                         // When we reach loop count set timer to count down for pauseDelay seconds
                     if (loopTimer == loop0) {
                         loopTimer = -pauseDelay; // pauseDelay is always +ive
