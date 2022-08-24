@@ -9,6 +9,7 @@
    android:padding="2dp"
    tools:context="com.example.yogatimer.MainActivity">
 
+<!-- setup button and EditTexts to change timer values  -->
    <Button
        android:id="@+id/setupButton"
        android:layout_width="wrap_content"
@@ -93,9 +94,11 @@
        android:textSize="25sp"
        android:textColor="#fff"
        android:maxLines="1" />
+<!-- END OF setup button and EditText to change timer values  -->
 
+<!-- loop timer display AND BUTTONS    -->
    <TextView
-       android:id="@+id/t1TextView"
+       android:id="@+id/t1View"
        android:layout_width="wrap_content"
        android:layout_height="wrap_content"
        android:layout_alignParentTop="true"
@@ -109,7 +112,7 @@
        android:id="@+id/loop1Button"
        android:layout_width="wrap_content"
        android:layout_height="wrap_content"
-       android:layout_below="@+id/t1TextView"
+       android:layout_below="@+id/t1View"
        android:layout_alignParentLeft="true"
        android:layout_marginLeft="10dp"
        android:layout_marginTop="5dp"
@@ -120,13 +123,15 @@
        android:id="@+id/loop2Button"
        android:layout_width="wrap_content"
        android:layout_height="wrap_content"
-       android:layout_below="@+id/t1TextView"
+       android:layout_below="@+id/t1View"
        android:layout_alignParentRight="true"
        android:layout_marginTop="5dp"
        android:layout_marginRight="10dp"
        android:onClick="onClickLoop2"
        android:textSize="20sp" />
+<!-- END OF loop timer display AND BUTTONS    -->
 
+<!-- relaxation timer display and buttons at bottom of screen -->
    <Button
        android:id="@+id/stopButton"
        android:layout_width="wrap_content"
@@ -151,7 +156,7 @@
    android:text="start" />
 
    <TextView
-       android:id="@+id/t2TextView"
+       android:id="@+id/t2View"
        android:layout_width="wrap_content"
        android:layout_height="wrap_content"
        android:layout_centerHorizontal="true"
@@ -172,5 +177,6 @@
        android:textSize="20sp"
        android:onClick="onClickClear"
        android:text="clear" />
+<!-- END OF relaxation timer display and buttons at bottom of screen -->
 
 </RelativeLayout>
