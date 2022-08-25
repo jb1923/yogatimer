@@ -35,9 +35,10 @@ class CustomEditText extends EditText {
     }
     public int GetInt( int default1) {
         // gets integer from CustomEditText - if no valid int, returns default1
+        // first remove all chars  except numbers
         String edTxtStr = getText().toString().replaceAll("[^0-9]+",  "");
-        if (edTxtStr.equals(""))  return default1;
-        else  return  Integer.valueOf(edTxtStr );// only numbers
+        // if edTxtStr ="" return default1 else return user value as integer
+        return  (edTxtStr.equals(""))? default1:Integer.valueOf(edTxtStr );
     }
     public void SetInt( int value ) {
         //displays  integer value in CustomEditText
@@ -68,7 +69,7 @@ public class MainActivity extends Activity {
     private Button loop2Button;
     private Button startT2Button;
     int colWhite = 0xFFFFFFFF;
-    int colGreen = 0xFF00FF00;
+ //   int colGreen = 0xFF00FF00;
     int buttonOffColor = colWhite;
     int buttonOnColor = 0xFFFFFF00;
     int pauseColor = 0xFFFF0000;
@@ -244,13 +245,12 @@ public class MainActivity extends Activity {
                 }
                 t1View.setText(time_t1);
                 if (runningT1)
-                {
-                    if (loopTimer < 0)  t1View.setTextColor(pauseColor);
-                    else t1View.setTextColor(colWhite);
+                {   // set timer1 red for pauseDelay -7" then white for loop 45"
+                    t1View.setTextColor((loopTimer < 0)?pauseColor:colWhite);
                     if (loopTimer == 0) toneGen1.startTone(ToneGenerator.TONE_CDMA_PIP, 150);
                         // When we reach loop count set timer to count down for pauseDelay seconds
-                    if (loopTimer == loop0) {
-                        loopTimer = -pauseDelay; // pauseDelay is always +ive
+                    if (loopTimer == loop0) { // reached end of loop ie. 45"
+                        loopTimer = -pauseDelay; // timer reset to -7" pauseDelay
                         toneGen1.startTone(ToneGenerator.TONE_CDMA_PIP, 150);
                     }
                     loopTimer++; // update loopTimer if not stopped
@@ -267,19 +267,12 @@ public class MainActivity extends Activity {
                 time_t2 = String.format("%02d:%02d:%02d", hrs, mins, Math.abs(secs));
                 t2View.setText(time_t2);
                 if (runningT2)
-                {
-                    if (relaxationTimer < 0) {
-                        t2View.setTextColor(pauseColor);
-                    } else {
-                        t2View.setTextColor(colWhite);
-                    }
-                    if (runningT1 == false) { //  if t1 is stopped
-                        if ((relaxationTimer % 600) == 0)// beep at 0, 10, 20, 30 mins
-                        {
+                {   // set timer2 red for pauseDelay -7" then white
+                    t2View.setTextColor((relaxationTimer < 0)?pauseColor:colWhite);
+                    //  if t1 is stopped, then every 600" beep
+                    if ((runningT1 == false) && ((relaxationTimer % 10) == 0))
                             toneGen1.startTone(ToneGenerator.TONE_CDMA_PIP, 150);
-                        }
-                    }
-                    relaxationTimer++; // update loopTimer as T});2 running
+                     relaxationTimer++; // update loopTimer as T});2 running
                 } // end of if (runningT2)
                 handle1.postDelayed(this, 1000); // 1" time delay
             }  //= end of public void run
