@@ -17,19 +17,18 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 
-import androidx.appcompat.widget.AppCompatEditText;
+//import androidx.appcompat.widget.AppCompatEditText;
 
 import java.util.Locale;
 
-class CustomEditText extends EditText {
+class CustomEditText extends EditText
+{
     public CustomEditText(Context context) {
         super(context);
     }
-
     public CustomEditText(Context context, AttributeSet attrs) {
         super(context, attrs);
     }
-
     public CustomEditText(Context context, AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
     }
@@ -38,14 +37,13 @@ class CustomEditText extends EditText {
         // first remove all chars  except numbers
         String edTxtStr = getText().toString().replaceAll("[^0-9]+",  "");
         // if edTxtStr ="" return default1 else return user value as integer
-        return  (edTxtStr.equals(""))? default1:Integer.valueOf(edTxtStr );
+        return  edTxtStr.equals("")? default1: Integer.parseInt(edTxtStr);
     }
-    public void SetInt( int value ) {
-        //displays  integer value in CustomEditText
-        setText(" "+Integer.toString(value)+" ");// add spaces for easy selectin
+    public void SetInt( int value )
+    {//displays  integer value in CustomEditText
+         setText(" "+Integer.toString(value)+" ");// add spaces for easy selectin
     }
-
-}
+}// end of CustomEditText class
 
 public class MainActivity extends Activity {
     private int pauseDelay; // pause between loops
@@ -69,7 +67,6 @@ public class MainActivity extends Activity {
     private Button loop2Button;
     private Button startT2Button;
     int colWhite = 0xFFFFFFFF;
- //   int colGreen = 0xFF00FF00;
     int buttonOffColor = colWhite;
     int buttonOnColor = 0xFFFFFF00;
     int pauseColor = 0xFFFF0000;
@@ -83,7 +80,7 @@ public class MainActivity extends Activity {
         setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
         getWindow().addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
         loadData();// loads previous setup values between sessions
-        // associate java variables with buttons/views from xml files
+ // associate java variables with buttons/views from xml files
         setupButton = (Button) findViewById(R.id.setupButton);
         editPause = (CustomEditText) findViewById(R.id.editPause);
         labelPause = (TextView) findViewById(R.id.labelPause);
@@ -96,18 +93,18 @@ public class MainActivity extends Activity {
         startT2Button = (Button) findViewById(R.id.startT2Button);
         t1View = (TextView) findViewById(R.id.t1View);
         t2View = (TextView) findViewById(R.id.t2View);
-        // hide setup menu
+ // hide setup menu
         editPause.setVisibility(View.INVISIBLE);
         labelPause.setVisibility(View.INVISIBLE);
         editLoop1.setVisibility(View.INVISIBLE);
         labelLoop1.setVisibility(View.INVISIBLE);
         editLoop2.setVisibility(View.INVISIBLE);
         labelLoop2.setVisibility(View.INVISIBLE);
-        // label buttons
+ // label buttons
         loop1Button.setText("loop " + Integer.toString(loop1));//set the text on button ie loop45
         loop2Button.setText("loop " + Integer.toString(loop2));//set the text on button ie. loop60
         setupButton.setText("setup ");//set the text on button
-
+// run app timer
         running_loopTimer();
     }
 
@@ -270,7 +267,7 @@ public class MainActivity extends Activity {
                 {   // set timer2 red for pauseDelay -7" then white
                     t2View.setTextColor((relaxationTimer < 0)?pauseColor:colWhite);
                     //  if t1 is stopped, then every 600" beep
-                    if ((runningT1 == false) && ((relaxationTimer % 10) == 0))
+                    if ((runningT1 == false) && ((relaxationTimer % 600) == 0))
                             toneGen1.startTone(ToneGenerator.TONE_CDMA_PIP, 150);
                      relaxationTimer++; // update loopTimer as T});2 running
                 } // end of if (runningT2)
